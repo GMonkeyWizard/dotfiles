@@ -1,0 +1,169 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+	color_good = "#268bd2"
+	color_degraded = "#cb4b16"
+	color_bad = "#b58900"
+	#color_seperator = 
+        interval = 2
+}
+
+order += "mpd_status"
+order += "keyboard_layout"
+#order += "pomodoro"
+order += "arch_updates"
+order += "volume_status"
+#order += "volume master"
+order += "sysdata"
+#order += "cpu_usage"
+#order += "cpu_temperature 0"
+#order += "load"
+# order += "ipv6"
+order += "group disks"
+order += "net_rate"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery_level"
+# order += "battery all"
+order += "tztime local"
+
+pomodoro {
+	format = "{ss} {bar}"
+	display_bar = "True"
+	num_progress_bars = 5
+	timer_break = 300
+	timer_long_break = 900
+	max_breaks = 4
+}
+
+mpd_status {
+	# Show state, [duration], title (or file) and next song title (or file):
+	format = "{state} \[{time}\][[[{artist} - ]{title}]|[{file}]] → [{next_title}|{next_file}]"
+	hide_when_paused = "False"
+	hide_when_stopped = "False"
+	host = "localhost"
+	port = "6600"
+	state_play = ""
+	state_pause = ""
+	state_stop = ""
+	max_width = 120
+	color_play = "default"
+	color_pause = "default"
+	color_stop = "default"
+}
+
+arch_updates {
+	format = "UPD: {pacman}"
+	hide_if_zero = true
+	include_aur = false
+	cache_timeout = 600
+}	
+
+sysdata {
+
+}
+
+keyboard_layout {
+	format =  " {layout}"
+}
+
+volume_status {
+	button_up = 4
+	button_down = 5
+	button_mute = 2
+	cache_timeout = 2
+#	thresholds = [
+#        (0, "#FF0000"),
+#        (10, "#E2571E"),
+#        (20, "#FF7F00"),
+#        (30, "#FFFF00"),
+#        (40, "#00FF00"),
+#        (50, "#96BF33"),
+#        (60, "#0000FF"),
+#        (70, "#4B0082"),
+#        (80, "#8B00FF"),
+#        (90, "#FFFFFF")
+#    ]
+}
+
+volume master {
+	format = " %volume"
+	format_muted = ""
+	device = "hw:0"
+	mixer = "Master"
+	mixer_idx = 0
+}
+
+cpu_usage {
+	format = " %usage"
+}
+
+cpu_temperature 0 {
+	format = " %degrees °C"
+}
+
+wireless _first_ {
+        format_up = " %ip  %bitrate  (%quality at %essid)"
+        format_down = ""
+}
+
+ethernet _first_ {
+        # if you use %speed, i3status requires root privileges
+        format_up = " %ip  %bitrate (%speed)"
+        format_down = " "
+}
+
+battery_level {
+	format = "{icon} {percent}% {time_remaining}"
+	battery_id = "all"
+#	blocks = "default"
+	charging_character = ""
+	format_notify_charging = "default"
+	format_norify_discharging = "default"
+	threshold_full = 100
+	threshold_degraded = 30
+	threshold_bad = 10
+	notify_low_level = true
+	hide_seconds = true
+	cache_timeout = 30	
+}
+
+net_rate {
+	format = "{interface}: {total}"
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+	status_chr = ""
+	status_bat = ""
+	hide_seconds = true
+	integer_battery_capacity = true
+}
+
+tztime local {
+        format = " %H:%M:%S  %d-%m-%Y"
+}
+
+load {
+        format = " %1min"
+}
+
+group disk {
+	cycle = 30
+	format = "Disks: {output}"
+
+	disk "/" {
+        format = " %percentage_free"
+	}
+
+	disk "/home" {
+	format = " %free"
+	}	
+}
